@@ -33,7 +33,8 @@ private var isOperator: Boolean = false
 private var hasOperator: Boolean = false
 ```
 
-텍스트를 공백(" ")을 기준으로 나누어 List<String>으로 반환해주는 split 내장 메서드를 사용하여 입력숫자1 +(연산자) 입력숫자2 와 같이 구분하였습니다.
+사용자에 입력받고 그 숫자들을 저장할 때 공백을 포함하여 변수에 저장하였고 그 값을 연산을 위해 꺼낼때 
+텍스트를 공백(" ")을 기준으로 나누어 List<String>으로 반환해주는 split 내장 메서드를 사용하여 입력숫자1 ÷(연산자) 입력숫자2 와 같이 구분하였습니다.
   ```
   val expressionText = expressionTextView.text.split(" ")
   ```
