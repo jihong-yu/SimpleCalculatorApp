@@ -20,7 +20,7 @@
 
 기초적인 어플이기 때문에 ViewBinding 과 같은 라이브러리는 사용하지 않았으며 모두 각각 findViewById로 xml 뷰에 접근하였습니다.
 
-```
+```kotlin
 private val historyLayout: ConstraintLayout by lazy {
         findViewById(R.id.history_layout)
     }
@@ -28,19 +28,19 @@ private val historyLayout: ConstraintLayout by lazy {
 
 isOperator,hasOperator 라는 두개의 boolean형 변수를 만들어 연산자가 이미 존재하는지 혹은 연산자를 사용하였는지를 체크하였습니다.
 
-```
+```kotlin
 private var isOperator: Boolean = false
 private var hasOperator: Boolean = false
 ```
 
 사용자에 입력받고 그 숫자들을 저장할 때 공백을 포함하여 변수에 저장하였고 그 값을 연산을 위해 꺼낼때 
 텍스트를 공백(" ")을 기준으로 나누어 List<String>으로 반환해주는 split 내장 메서드를 사용하여 입력숫자1 ÷(연산자) 입력숫자2 와 같이 구분하였습니다.
-  ```
+  ```kotlin
   val expressionText = expressionTextView.text.split(" ")
   ```
   
   또한 입력할 수 있는 숫자를 15자리 제한하거나 0을 제일먼저 입력할 수 없도록 제한하였습니다.
-  ```
+  ```kotlin
   if (expressionText.last().length >= 15) {
             Toast.makeText(this@MainActivity, "15자리 까지만 사용할 수 있습니다.", Toast.LENGTH_LONG).show()
             return
@@ -51,17 +51,17 @@ private var hasOperator: Boolean = false
         }
   ```
   입력한 숫자를 String형으로 받아 Int형은 숫자 범위에 제한이 있으므로 제한이 없는 BigInteger형으로 변환하였습니다.
-  ```
+  ```kotlin
   return when (expressionText[1]) {
                 "/" -> {
                     (expressionText[0].toBigInteger() / expressionText[2].toBigInteger()).toString()
                 }
   ```
   
-  Room DB에 데이터를 넣고 빼는 코드들은 모드 Thread를 따로 열어 비동기로 작업하였으며 UI를 그려야 하는 부분이 있으면 runOnUiThread 메서드를 사용하였습니다.
+  Room DB에 데이터를 넣고 빼는 코드들은 모드 Thread를 따로 열어 비동기로 작업하였으며 UI를 그려야 하는 부분이 있으면 runOnUiThread 메서드를 사용하였습니다.<br>
   또한 초기에 스크롤뷰를 선언하고 내부에 리니어레이아웃을 집어넣어 그 내부에 연산기록들을 반복문으로 addView 하여 집어넣는 형식으로 구현하였지만 성능 부분에서 최적화
   하기 위해 리사이클러뷰를 사용하였습니다.
-  ```
+  ```kotlin
   //todo DB에 넣어주는 부분(비동기처리)
         Thread {
             db.historyDao().insertHistory(History(null,tempExpressionText,resultText))
